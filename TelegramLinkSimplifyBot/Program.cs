@@ -1,14 +1,13 @@
 using TelegramLinkSimplifyBot;
+using TelegramLinkSimplifyBot.Configs;
 
-IHost host = Host.CreateDefaultBuilder(args)
-    .ConfigureAppConfiguration(builder =>
-    {
-        builder.AddUserSecrets<Program>();
-    })
-    .ConfigureServices(services =>
-    {
-        services.AddHostedService<Worker>();
-    })
-    .Build();
+var builder = Host.CreateApplicationBuilder(args);
 
-await host.RunAsync();
+builder.Configuration
+    .AddUserSecrets<Program>();
+
+builder.Services
+    .Configure<AppSecret>(builder.Configuration.GetSection(nameof(AppSecret)))
+    .AddHostedService<Worker>();
+
+await builder.Build().RunAsync();
