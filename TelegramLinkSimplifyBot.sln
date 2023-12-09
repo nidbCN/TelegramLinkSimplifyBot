@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TelegramLinkSimplifyBot.Web
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelegramLinkSimplifyBot.Core", "TelegramLinkSimplifyBot.Core\TelegramLinkSimplifyBot.Core.csproj", "{F65626EB-BFD9-4A8A-902D-D2666C256DD1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelegramLinkSimplifyBot.Plugin", "TelegramLinkSimplifyBot.Plugin\TelegramLinkSimplifyBot.Plugin.csproj", "{65BC090E-2713-4601-9DD4-3FD58E0118A7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{F65626EB-BFD9-4A8A-902D-D2666C256DD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F65626EB-BFD9-4A8A-902D-D2666C256DD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F65626EB-BFD9-4A8A-902D-D2666C256DD1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65BC090E-2713-4601-9DD4-3FD58E0118A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65BC090E-2713-4601-9DD4-3FD58E0118A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65BC090E-2713-4601-9DD4-3FD58E0118A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65BC090E-2713-4601-9DD4-3FD58E0118A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
