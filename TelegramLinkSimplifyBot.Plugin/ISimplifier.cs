@@ -2,16 +2,19 @@
 
 public interface ISimplifier
 {
+    /// <summary>
+    /// Plugin name.
+    /// </summary>
     public string Name { get; }
-    public string Verison { get; }
-    public IDictionary<string, Func<Uri, Task<(bool, string, Uri)>>> SimplifyMethods { get; }
-    public IList<string> HandleHosts { get; }
 
     /// <summary>
-    /// Simplify input url.
+    /// Plugin version.
     /// </summary>
-    /// <param name="url">Uri to simplify.</param>
-    /// <param name="message">If success, return url string, or error message.</param>
-    /// <returns>Simplify result.</returns>
-    public Task<bool> HandleSimplify(Uri url, out string message);
+    public string Verison { get; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public IDictionary<string, Func<Uri, Task<(bool, string?, Uri?)>>> SimplifyMethods { get; }
+
 }

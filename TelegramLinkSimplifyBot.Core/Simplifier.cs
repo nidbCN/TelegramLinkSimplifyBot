@@ -27,21 +27,25 @@ public class Simplifier
 
         if (isUri)
         {
-            // url
             var simplifier = _simplifiers
-                .SelectMany(plugin => plugin.HandleHosts
-                    .Where(host => host == uri!.Host)
-                    .Select(host => plugin))
-            .FirstOrDefault();
+                .SelectMany(plugin => plugin.SimplifyMethods
+                    .Where(pair => pair.Key == uri!.Host)
+                    .Select(_ => plugin))
+                .FirstOrDefault();
 
             if (simplifier is null)
             {
                 return "No plugin can hold this url";
             }
 
-            _ = (await simplifier.HandleSimplify(uri!, out var pluginMessage));
+            (var success, var messsage, var result) = await simplifier.SimplifyMethods[uri!.Host](uri!);
 
-            return $"`{pluginMessage}`\nBy {simplifier.Name} {simplifier.Verison}";
+            if (success)
+            {
+                return $"`{result}`\nBy plugin {simplifier.Name} {simplifier.Verison}.";
+            }
+
+            return $"";
         }
         // commands
         return text switch
