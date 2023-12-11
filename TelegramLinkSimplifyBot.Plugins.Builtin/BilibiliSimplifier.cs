@@ -1,6 +1,8 @@
 ﻿using System.Web;
+using TelegramLinkSimplifyBot.Plugin;
 
-namespace TelegramLinkSimplifyBot.Plugin.Bilibili;
+namespace TelegramLinkSimplifyBot.Plugins.Builtin;
+
 public class BilibiliSimplifier : ISimplifier
 {
     public string Name => "Bilibili Simplifier";

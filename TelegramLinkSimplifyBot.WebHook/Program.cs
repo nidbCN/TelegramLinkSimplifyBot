@@ -3,6 +3,7 @@ using Telegram.Bot.Controllers;
 using Telegram.Bot.Services;
 using TelegramLinkSimplifyBot.Webhook.Extensions;
 using TelegramLinkSimplifyBot.Webhook.Configs;
+using TelegramLinkSimplifyBot.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,7 @@ builder.Services
     });
 
 builder.Services.AddScoped<UpdateHandlers>();
+builder.Services.AddSingleton<MessageService>(); 
 builder.Services.AddHostedService<ConfigureWebhook>();
 builder.Services
     .AddControllers()

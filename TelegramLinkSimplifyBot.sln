@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TelegramLinkSimplifyBot.Cor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TelegramLinkSimplifyBot.Plugin", "TelegramLinkSimplifyBot.Plugin\TelegramLinkSimplifyBot.Plugin.csproj", "{65BC090E-2713-4601-9DD4-3FD58E0118A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelegramLinkSimplifyBot.Plugins.Bilibili", "TelegramLinkSimplifyBot.Plugins\Bilibili\TelegramLinkSimplifyBot.Plugins.Bilibili.csproj", "{D0EAC6C6-322D-4120-8F4D-EF35CA186868}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TelegramLinkSimplifyBot.Plugins.Builtin", "TelegramLinkSimplifyBot.Plugins.Builtin\TelegramLinkSimplifyBot.Plugins.Builtin.csproj", "{D0EAC6C6-322D-4120-8F4D-EF35CA186868}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
