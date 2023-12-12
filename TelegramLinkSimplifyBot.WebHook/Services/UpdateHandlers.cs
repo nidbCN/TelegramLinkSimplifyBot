@@ -60,7 +60,7 @@ public class UpdateHandlers
 
         if (!Uri.TryCreate(message.Text, UriKind.Absolute, out var url))
         {
-            const string usage = "Unknow command or link, please send me a url.";
+            const string usage = "Unknow command or link, please send me a url";
 
             await _botClient.SendTextMessageAsync(
                chatId: message.Chat.Id,
@@ -79,13 +79,13 @@ public class UpdateHandlers
         async Task SendStart(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
         {
             const string usage =
-                "*Welcome to use simplify bot*, this bot can remove tracking info in your link.\n"
-                + "\t`/start`: Show this welcome message.\n"
-                + "\t.`/info`: Show current plugins.";
+                "*Welcome to use simplify bot*, this bot can remove tracking info in your link\n"
+                + "\t`/start`: Show this welcome message\n"
+                + "\t.`/info`: Show current plugins";
 
             await botClient.SendTextMessageAsync(
                 chatId: message.Chat.Id,
-                text: usage,
+                text: usage.Replace(".", @"\."),
                 parseMode: ParseMode.MarkdownV2,
                 replyMarkup: new ReplyKeyboardRemove(),
                 cancellationToken: cancellationToken);
@@ -110,7 +110,7 @@ public class UpdateHandlers
             {
                 await botClient.SendTextMessageAsync(
                     chatId: message.Chat.Id,
-                    text: $"`{result.Url}`\nBy {result.Plugin}",
+                    text: $"`{result.Url}`\nBy {result.Plugin}".Replace(".", @"\."),
                     parseMode: ParseMode.MarkdownV2,
                     replyMarkup: new InlineKeyboardMarkup(
                         InlineKeyboardButton.WithUrl(
