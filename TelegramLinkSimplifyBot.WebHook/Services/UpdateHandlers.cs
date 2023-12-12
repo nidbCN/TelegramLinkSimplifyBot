@@ -1,5 +1,6 @@
 using Telegram.Bot.Exceptions;
 using Telegram.Bot.Types;
+using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
 using TelegramLinkSimplifyBot.Core;
 
@@ -78,17 +79,14 @@ public class UpdateHandlers
         async Task SendStart(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
         {
             const string usage =
-                "Welcome to use simplify bot, this bot can remove tracking info in your link.\n" +
-                     "/inline_keyboard - send inline keyboard\n" +
-                     "/keyboard    - send custom keyboard\n" +
-                     "/remove      - remove custom keyboard\n" +
-                     "/photo       - send a photo\n" +
-                     "/request     - request location or contact\n" +
-                     "/inline_mode - send keyboard with Inline Query";
+                "*Welcome to use simplify bot*, this bot can remove tracking info in your link.\n"
+                + "\t`/start`: Show this welcome message.\n"
+                + "\t.`/info`: Show current plugins.";
 
             await botClient.SendTextMessageAsync(
                 chatId: message.Chat.Id,
                 text: usage,
+                parseMode: ParseMode.MarkdownV2,
                 replyMarkup: new ReplyKeyboardRemove(),
                 cancellationToken: cancellationToken);
         }
@@ -114,6 +112,7 @@ public class UpdateHandlers
                 await botClient.SendTextMessageAsync(
                     chatId: message.Chat.Id,
                     text: $"`{result.Url}`\nBy {result.Plugin}",
+                    parseMode: ParseMode.MarkdownV2,
                     replyMarkup: new InlineKeyboardMarkup(
                         InlineKeyboardButton.WithUrl(
                             text: "Open in telegram",
@@ -125,6 +124,7 @@ public class UpdateHandlers
                 await botClient.SendTextMessageAsync(
                     chatId: message.Chat.Id,
                     text: $"`Failed! Message {result.Message}`\nBy {result.Plugin}",
+                    parseMode: ParseMode.MarkdownV2,
                     replyMarkup: new ReplyKeyboardRemove(),
                     cancellationToken: cancellationToken);
             }
