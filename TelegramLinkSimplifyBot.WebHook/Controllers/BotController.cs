@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Telegram.Bot.Filters;
+using Telegram.Bot.Polling;
+using Telegram.Bot.Services;
 using Telegram.Bot.Types;
 using TelegramLinkSimplifyBot.Core;
 
@@ -7,11 +9,11 @@ namespace Telegram.Bot.Controllers;
 
 public class BotController : ControllerBase
 {
-    private readonly MessageService _messageService;
+    private readonly UpdateHandlers _updateHandler;
     
-    public BotController(MessageService messageService)
+    public BotController(UpdateHandlers updateHandler)
     {
-        _messageService = messageService;
+        _updateHandler = updateHandler;
     }
 
     [HttpPost]
@@ -20,7 +22,7 @@ public class BotController : ControllerBase
         [FromBody] Update update,
         CancellationToken cancellationToken)
     {
-        
+        await _updateHandler.HandleUpdateAsync(update, cancellationToken);
         return Ok();
     }
 }

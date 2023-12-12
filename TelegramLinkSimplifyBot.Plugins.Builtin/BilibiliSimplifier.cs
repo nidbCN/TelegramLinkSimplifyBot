@@ -1,4 +1,8 @@
-﻿using System.Web;
+﻿using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web;
 using TelegramLinkSimplifyBot.Plugin;
 
 namespace TelegramLinkSimplifyBot.Plugins.Builtin;
@@ -7,7 +11,7 @@ public class BilibiliSimplifier : ISimplifier
 {
     public string Name => "Bilibili Simplifier";
 
-    public string Verison => "6.0.0.2";
+    public string Version => "6.0.0.2";
 
     public IDictionary<string, Func<Uri, Task<(bool, string?, Uri?)>>> SimplifyMethods
         => new Dictionary<string, Func<Uri, Task<(bool, string?, Uri?)>>>()

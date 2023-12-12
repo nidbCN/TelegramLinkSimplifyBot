@@ -1,53 +1,56 @@
 ﻿using Microsoft.Extensions.Logging;
-using System.Reflection;
+using TelegramLinkSimplifyBot.Core.Models;
 using TelegramLinkSimplifyBot.Plugin;
 
 namespace TelegramLinkSimplifyBot.Core;
+
 public class MessageService
 {
     private readonly ILogger<MessageService> _logger;
     private readonly IList<ISimplifier> _simplifiers;
 
+    public IList<string> HostListInfo
+    {
+        get => _simplifiers.Select(plugin => "\t\n" + string.Join("\t\n", plugin.SimplifyMethods.Keys) + $"\nBy {plugin.Name} {plugin.Version}").ToArray();
+    }
+
     public MessageService(ILogger<MessageService> logger)
     {
         _logger = logger;
-        _simplifiers = PluginUtils.LoadAddDll(new[] { @"Plugins" });
+        _simplifiers = PluginUtils.LoadAddDll(new[] { @"Plugins\TelegramLinkSimplifyBot.Plugins.Builtin.dll" });
 
         _logger.LogInformation("Success load {cnt} simplifiers.", _simplifiers.Count);
     }
 
-    public async Task<string> HandleUpdate(string text)
+    public async Task<SimplifyResult> SimplifyWithPlugins(Uri originUrl)
     {
-        var isUri = Uri.TryCreate(text, UriKind.Absolute, out var uri);
+        // 第一个可用的简化器
+        var simplifier = _simplifiers
+            .SelectMany(plugin => plugin.SimplifyMethods
+                .Where(pair => pair.Key == originUrl!.Host)
+                .Select(_ => plugin))
+            .FirstOrDefault();
 
-        if (isUri)
+        if (simplifier is null)
         {
-            var simplifier = _simplifiers
-                .SelectMany(plugin => plugin.SimplifyMethods
-                    .Where(pair => pair.Key == uri!.Host)
-                    .Select(_ => plugin))
-                .FirstOrDefault();
-
-            if (simplifier is null)
+            return new SimplifyResult(false)
             {
-                return "No plugin can hold this url";
-            }
-
-            (var success, var messsage, var result) = await simplifier.SimplifyMethods[uri!.Host](uri!);
-
-            if (success)
-            {
-                return $"`{result}`\nBy plugin {simplifier.Name} {simplifier.Verison}.";
-            }
-
-            return $"";
+                Url = originUrl,
+                Message = "No plugin can hold this url.",
+                Plugin = "null",
+            };
         }
 
-        // commands
-        return text switch
+        _logger.LogInformation("Mathch simplifier {name} for {host}", simplifier.Name, originUrl.Host);
+
+        (var success, var messsage, var result) = await
+            simplifier.SimplifyMethods[originUrl!.Host](originUrl!);
+
+        return new SimplifyResult(success)
         {
-            "/start" => "Welcome! Please send a url to me.",
-            _ => "UnKnow command."
+            Url = result,
+            Message = messsage,
+            Plugin = $"{simplifier.Name} {simplifier.Version}",
         };
     }
 }

@@ -10,7 +10,7 @@ public interface ISimplifier
     /// <summary>
     /// Plugin version.
     /// </summary>
-    public string Verison { get; }
+    public string Version { get; }
 
     /// <summary>
     /// 
