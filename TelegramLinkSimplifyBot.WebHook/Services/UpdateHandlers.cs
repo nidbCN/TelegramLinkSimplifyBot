@@ -46,7 +46,7 @@ public class UpdateHandlers
     private async Task BotOnMessageReceived(Message message, CancellationToken cancellationToken)
     {
         _logger.LogInformation("Receive message type: {MessageType}", message.Type);
-        if (message.Text is not { } messageText)
+        if (message.Text is not { })
             return;
 
         if (message.Text == "/start")
@@ -102,7 +102,6 @@ public class UpdateHandlers
                 cancellationToken: cancellationToken);
         }
 
-
         async Task SendLink(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
         {
             var result = await _messageService.SimplifyWithPlugins(url!);
@@ -130,8 +129,6 @@ public class UpdateHandlers
             }
         }
     }
-
-
 
     private Task UnknownUpdateHandlerAsync(Update update, CancellationToken cancellationToken)
     {
