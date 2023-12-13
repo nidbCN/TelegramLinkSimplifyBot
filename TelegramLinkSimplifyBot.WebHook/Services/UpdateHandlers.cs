@@ -52,12 +52,15 @@ public class UpdateHandlers
         if (message.Text == "/start")
         {
             await SendStart(_botClient, message, cancellationToken);
+            return;
         }
         else if (message.Text == "/info")
         {
             await SendInfo(_botClient, message, cancellationToken);
+            return;
         }
-        else if (!Uri.TryCreate(message.Text, UriKind.Absolute, out var url))
+
+        if (!Uri.TryCreate(message.Text, UriKind.Absolute, out var url))
         {
             const string usage = "Unknow command or link, please send me a url";
 
