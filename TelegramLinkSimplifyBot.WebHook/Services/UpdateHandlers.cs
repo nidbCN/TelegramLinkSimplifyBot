@@ -95,11 +95,16 @@ public class UpdateHandlers
 
         async Task SendInfo(ITelegramBotClient botClient, Message message, CancellationToken cancellationToken)
         {
-            var list = _messageService.HostListInfo;
+            var avaliableHosts = _messageService.HostInfo;
+            var avaliableHostText = string.Join("\n",
+                avaliableHosts.Select((info) => $"{info.Key}\t\n"
+                    + string.Join("\t\n", info.Value.Select(host => $"`{host}`"
+                    ))));
 
             await botClient.SendTextMessageAsync(
                 chatId: message.Chat.Id,
-                text: string.Join("\n", list).Replace(".", @"\."),
+                text: avaliableHostText.Replace(".", @"\."),
+                parseMode: ParseMode.MarkdownV2,
                 replyMarkup: new ReplyKeyboardRemove(),
                 cancellationToken: cancellationToken);
         }
@@ -116,7 +121,7 @@ public class UpdateHandlers
                     parseMode: ParseMode.MarkdownV2,
                     replyMarkup: new InlineKeyboardMarkup(
                         InlineKeyboardButton.WithUrl(
-                            text: "Open in telegram",
+                            text: "Open link",
                             url: result.Url!.AbsoluteUri)),
                     cancellationToken: cancellationToken);
             }

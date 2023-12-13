@@ -9,10 +9,11 @@ public class MessageService
     private readonly ILogger<MessageService> _logger;
     private readonly IList<ISimplifier> _simplifiers;
 
-    public IList<string> HostListInfo
-    {
-        get => _simplifiers.Select(plugin => "\t\n" + string.Join("\t\n", plugin.SimplifyMethods.Keys) + $"\nBy {plugin.Name} {plugin.Version}").ToArray();
-    }
+    public IDictionary<string, IList<string>> HostInfo =>
+        (IDictionary<string, IList<string>>)
+            _simplifiers.ToDictionary(
+            simp => $"{simp.Name} {simp.Version}",
+            simp => simp.SimplifyMethods.Keys.ToList());
 
     public MessageService(ILogger<MessageService> logger)
     {
