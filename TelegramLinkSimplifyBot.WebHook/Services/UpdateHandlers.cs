@@ -57,14 +57,13 @@ public class UpdateHandlers
         {
             await SendInfo(_botClient, message, cancellationToken);
         }
-
-        if (!Uri.TryCreate(message.Text, UriKind.Absolute, out var url))
+        else if (!Uri.TryCreate(message.Text, UriKind.Absolute, out var url))
         {
             const string usage = "Unknow command or link, please send me a url";
 
             await _botClient.SendTextMessageAsync(
                chatId: message.Chat.Id,
-               text: usage,
+               text: usage.Replace(".", @"\."),
                replyMarkup: new ReplyKeyboardRemove(),
                cancellationToken: cancellationToken);
 
@@ -97,7 +96,7 @@ public class UpdateHandlers
 
             await botClient.SendTextMessageAsync(
                 chatId: message.Chat.Id,
-                text: string.Join("\n", list),
+                text: string.Join("\n", list).Replace(".", @"\."),
                 replyMarkup: new ReplyKeyboardRemove(),
                 cancellationToken: cancellationToken);
         }
@@ -122,7 +121,7 @@ public class UpdateHandlers
             {
                 await botClient.SendTextMessageAsync(
                     chatId: message.Chat.Id,
-                    text: $"`Failed! Message {result.Message}`\nBy {result.Plugin}",
+                    text: $"`Failed! Message {result.Message}`\nBy {result.Plugin}".Replace(".", @"\."),
                     parseMode: ParseMode.MarkdownV2,
                     replyMarkup: new ReplyKeyboardRemove(),
                     cancellationToken: cancellationToken);

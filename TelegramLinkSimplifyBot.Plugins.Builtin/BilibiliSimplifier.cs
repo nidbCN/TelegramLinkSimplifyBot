@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
@@ -46,13 +47,15 @@ public class BilibiliSimplifier : ISimplifier
 
     private async Task<(bool, string?, Uri?)> SimplifyNormalUrl(Uri origin)
     {
+        const string QUERY_KEY = "t";
+
         var cleardUrl = await Task.Run(() => new Uri(origin, origin.AbsolutePath));
 
         var querys = await Task.Run(() => HttpUtility.ParseQueryString(origin.Query));
 
-        if (querys["t"] != null)
+        if (querys[QUERY_KEY] is { } queryValue)
         {
-            return (true, null, new Uri(cleardUrl, querys["t"]));
+            return (true, null, new Uri(cleardUrl, $"?{QUERY_KEY}={queryValue}"));
         }
 
         return (true, null, cleardUrl);
