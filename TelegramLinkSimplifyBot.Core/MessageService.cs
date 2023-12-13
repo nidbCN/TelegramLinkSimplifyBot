@@ -10,10 +10,10 @@ public class MessageService
     private readonly IList<ISimplifier> _simplifiers;
 
     public IDictionary<string, IList<string>> HostInfo =>
-        (IDictionary<string, IList<string>>)
-            _simplifiers.ToDictionary(
-            simp => $"{simp.Name} {simp.Version}",
-            simp => simp.SimplifyMethods.Keys.ToList());
+        _simplifiers.ToDictionary(
+                simp => $"{simp.Name} {simp.Version}",
+                simp => simp.SimplifyMethods.Keys.ToList() as IList<string>
+            );
 
     public MessageService(ILogger<MessageService> logger)
     {

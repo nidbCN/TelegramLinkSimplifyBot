@@ -12,7 +12,7 @@ public class BilibiliSimplifier : ISimplifier
 {
     public string Name => "Bilibili Simplifier";
 
-    public string Version => "6.0.0.2";
+    public string Version => "6.0.4";
 
     public IDictionary<string, Func<Uri, Task<(bool, string?, Uri?)>>> SimplifyMethods
         => new Dictionary<string, Func<Uri, Task<(bool, string?, Uri?)>>>()
