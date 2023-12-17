@@ -1,3 +1,4 @@
+using System.Reflection.Metadata.Ecma335;
 using Telegram.Bot.Exceptions;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
@@ -68,13 +69,13 @@ public class UpdateHandlers
         var startIndex = message.Text.IndexOf("http");
         if (startIndex != -1)
         {
-            var endIndex = SPLIT_CHAR
-                .Select(key => originUrl.IndexOf(key))
-                .Where(index => index != -1)
-                .DefaultIfEmpty(originUrl.Length)
-                .Min();
+            // foreach the text and find split char.
+            var skipCount = originUrl
+                .Skip(startIndex)
+                .TakeWhile(ch => !SPLIT_CHAR.Contains(ch))
+                .Count();
 
-            originUrl = originUrl[startIndex..endIndex];
+            originUrl = originUrl.Substring(startIndex, skipCount);
         }
 
         _logger.LogInformation("Receive url {url} from {id}.", originUrl, message.Chat.Id);
