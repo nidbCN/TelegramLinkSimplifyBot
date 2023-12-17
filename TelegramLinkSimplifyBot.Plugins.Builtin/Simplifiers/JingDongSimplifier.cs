@@ -10,12 +10,13 @@ public class JingDongSimplifier : ISimplifier
 {
     public string Name => "JDSimplifier";
 
-    public string Version => "6.0.0";
+    public string Version => "6.0.1";
 
     public IDictionary<string, Func<Uri, Task<(bool, string?, Uri?)>>> SimplifyMethods
         => new Dictionary<string, Func<Uri, Task<(bool, string?, Uri?)>>>()
         {
-            {"item.jd.com", SimplifyNormalUrl }
+            {"item.jd.com", SimplifyNormalUrl },
+            {"item.m.jd.com", SimplifyNormalUrl},
         };
 
     private async Task<(bool, string?, Uri?)> SimplifyNormalUrl(Uri origin)
