@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Web;
 using TelegramLinkSimplifyBot.Plugin;
 
-namespace TelegramLinkSimplifyBot.Plugins.Builtin;
+namespace TelegramLinkSimplifyBot.Plugins.Builtin.Simplifiers;
 
 public class BilibiliSimplifier : ISimplifier
 {
@@ -19,6 +19,7 @@ public class BilibiliSimplifier : ISimplifier
         {
             {"b23.tv", SimplifyShortUrl },
             {"www.bilibili.com", SimplifyNormalUrl },
+            {"m.bilibili.com", SimplifyNormalUrl },
             {"live.bilibili.com", SimplifyLiveUrl },
         };
 

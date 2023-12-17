@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using System.Web;
 using TelegramLinkSimplifyBot.Plugin;
 
-namespace TelegramLinkSimplifyBot.Plugins.Builtin;
+namespace TelegramLinkSimplifyBot.Plugins.Builtin.Simplifiers;
 public class AliShoppingSimplifier : ISimplifier
 {
     public string Name => "AliShoppingSimplifier";
