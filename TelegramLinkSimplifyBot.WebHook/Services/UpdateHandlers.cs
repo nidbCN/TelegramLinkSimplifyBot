@@ -68,18 +68,13 @@ public class UpdateHandlers
         var startIndex = message.Text.IndexOf("http");
         if (startIndex != -1)
         {
-            // split url and char back of it from text
-            originUrl = message.Text[startIndex..];
             var endIndex = SPLIT_CHAR
                 .Select(key => originUrl.IndexOf(key))
-                .OrderByDescending(index => index)
-                .First();
+                .Where(index => index != -1)
+                .DefaultIfEmpty(originUrl.Length)
+                .Min();
 
-            // split url from text
-            if (endIndex != -1)
-            {
-                originUrl = originUrl[..endIndex];
-            }
+            originUrl = originUrl[startIndex..endIndex];
         }
 
         _logger.LogInformation("Receive url {url} from {id}.", originUrl, message.Chat.Id);
