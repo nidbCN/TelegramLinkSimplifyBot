@@ -60,7 +60,31 @@ public class UpdateHandlers
             return;
         }
 
-        if (!Uri.TryCreate(message.Text, UriKind.Absolute, out var url))
+        var SPLIT_CHAR = new[] { ' ', ';', ',' };
+
+        var originUrl = message.Text;
+
+        // has keyword http
+        var startIndex = message.Text.IndexOf("http");
+        if (startIndex != -1)
+        {
+            // split url and char back of it from text
+            originUrl = message.Text[startIndex..];
+            var endIndex = SPLIT_CHAR
+                .Select(key => originUrl.IndexOf(key))
+                .OrderByDescending(index => index)
+                .First();
+
+            // split url from text
+            if (endIndex != -1)
+            {
+                originUrl = originUrl[..endIndex];
+            }
+        }
+
+        _logger.LogInformation("Receive url {url} from {id}.", originUrl, message.Chat.Id);
+
+        if (!Uri.TryCreate(originUrl, UriKind.Absolute, out var url))
         {
             const string usage = "Unknow command or link, please send me a url";
 
