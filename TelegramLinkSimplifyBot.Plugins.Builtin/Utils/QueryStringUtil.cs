@@ -6,7 +6,7 @@ using System.Web;
 namespace TelegramLinkSimplifyBot.Plugins.Builtin.Utils;
 internal class QueryStringUtil
 {
-    public NameValueCollection? FilterQuery(string query, params string[] reserve)
+    public static NameValueCollection? FilterQuery(string query, params string[] reserve)
     {
         if (reserve is null)
         {
@@ -15,13 +15,13 @@ internal class QueryStringUtil
 
         if (reserve.Length == 0)
         {
-            return new NameValueCollection();
+            return null;
         }
 
         var queryPair = HttpUtility.ParseQueryString(query);
         if (queryPair is null)
         {
-            return new NameValueCollection();
+            return null;
         }
 
         if (reserve.Length == 1)

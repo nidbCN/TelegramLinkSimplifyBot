@@ -1,4 +1,3 @@
-using System.Reflection.Metadata.Ecma335;
 using Telegram.Bot.Exceptions;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;

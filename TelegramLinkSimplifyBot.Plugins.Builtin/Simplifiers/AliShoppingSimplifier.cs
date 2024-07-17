@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web;
 using TelegramLinkSimplifyBot.Plugin;
+using TelegramLinkSimplifyBot.Plugins.Builtin.Utils;
 
 namespace TelegramLinkSimplifyBot.Plugins.Builtin.Simplifiers;
 public class AliShoppingSimplifier : ISimplifier
@@ -21,15 +22,15 @@ public class AliShoppingSimplifier : ISimplifier
     {
         const string QUERY_KEY = "id";
 
-        var cleardUrl = await Task.Run(() => new Uri(origin, origin.AbsolutePath));
+        var clearUrl = await Task.Run(() => new Uri(origin, origin.AbsolutePath));
 
-        var querys = await Task.Run(() => HttpUtility.ParseQueryString(origin.Query));
+        var query = QueryStringUtil.FilterQuery(origin.OriginalString, "id");
 
-        if (querys[QUERY_KEY] is { } queryValue)
+        if (query?[QUERY_KEY] is { } queryValue)
         {
-            return (true, null, new Uri(cleardUrl, $"?{QUERY_KEY}={queryValue}"));
+            return (true, null, new(clearUrl, $"?{QUERY_KEY}={queryValue}"));
         }
 
-        return (true, null, cleardUrl);
+        return (true, null, clearUrl);
     }
 }
