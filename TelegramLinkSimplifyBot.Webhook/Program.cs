@@ -24,7 +24,7 @@ builder.Services
     });
 
 builder.Services.AddScoped<UpdateHandlers>();
-builder.Services.AddSingleton<MessageService>(); 
+builder.Services.AddSingleton<MessageService>();
 builder.Services.AddHostedService<ConfigureWebhook>();
 builder.Services
     .AddControllers()
@@ -32,6 +32,6 @@ builder.Services
 
 var app = builder.Build();
 
-app.MapBotWebhookRoute<BotController>(route: botConfig[nameof(BotConfig.Route)]);
+app.MapBotWebhookRoute<BotController>(route: botConfig[nameof(BotConfig.Route)] ?? "/bot");
 app.MapControllers();
 app.Run();
